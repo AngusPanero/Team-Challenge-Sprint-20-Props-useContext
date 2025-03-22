@@ -1,4 +1,4 @@
-import { React, createContext, useContext, useState } from "react";
+import { React, createContext, useContext, useState, useEffect } from "react";
 
 const CalculatorContext = createContext()
 
@@ -9,19 +9,29 @@ const CalculatorProvider = ({ children }) => {
     const [ result, setResult ] = useState(null)
 
     const handleCount = (newCount) => {
-        if (operator === "") {
+        if (!operator) {
             setNumbers(numbers + newCount);
             setNumbersTwo(numbers + newCount)
         } else {
-            setNumbersTwo(numbersTwo + newCount);
+            setNumbers(newCount);
         }
         console.log("Uno", numbers);
         console.log("Dos", numbersTwo);
         
     }
-    
+
     const handleOperator = (newOperator) => {
         setOperator(newOperator)
+        setNumbers("")
+        console.log("Uno", numbers);
+        console.log("Dos", numbersTwo);
+    }
+
+    const handleReset = () => {
+        setOperator()
+        setNumbers("")
+        setNumbersTwo("")
+        setResult("")
     }
 
     const handleResult = () => {
@@ -31,33 +41,39 @@ const CalculatorProvider = ({ children }) => {
         let resultCount = 0;
         switch (operator) {
             case "+":
-                resultCount = number1 + number2;
+                resultCount = number2 + number1;
+                setResult(parseFloat(resultCount)); setNumbers(""); setNumbersTwo(""); setOperator(""); 
                 break;
             case "-":
-                resultCount = number1 - number2;
+                resultCount = number2 - number1;
+                setResult(parseFloat(resultCount)); setNumbers(""); setNumbersTwo(""); setOperator(""); 
                 break;
             case "x":
-                resultCount = number1 * number2;
+                resultCount = number2 * number1;
+                setResult(parseFloat(resultCount)); setNumbers(""); setNumbersTwo(""); setOperator(""); 
                 break;
             case "/":
-                resultCount = number1 / number2;
+                resultCount = number2 / number1;
+                setResult(parseFloat(resultCount)); setNumbers(""); setNumbersTwo(""); setOperator(""); 
                 break;
             case "%":
-                resultCount = number1 % number2;
+                resultCount = number2 % number1;
+                setResult(parseFloat(resultCount)); setNumbers(""); setNumbersTwo(""); setOperator(""); 
                 break;
             default:
                 break;
         }
-        setResult(parseFloat(resultCount)); 
-        setNumbers(""); 
-        setNumbersTwo(""); 
-        setOperator(""); 
         console.log(result);
-        
     }
 
+/*     useEffect(() => {
+        if (numbers && numbersTwo && operator) {
+            handleResult();
+        }
+    }, [numbers, numbersTwo, operator]); */
+
     return(
-        <CalculatorContext.Provider value={ {numbers, numbersTwo, operator, result, handleResult, handleCount, handleOperator} }>
+        <CalculatorContext.Provider value={ {numbers, numbersTwo, operator, result, handleResult, handleCount, handleOperator, handleReset} }>
             { children }
         </CalculatorContext.Provider>
     )

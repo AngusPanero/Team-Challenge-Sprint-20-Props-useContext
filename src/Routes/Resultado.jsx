@@ -6,12 +6,11 @@ import { useCalculator } from "../CalculatorContext/CalculatorContext";
 const Resultado = () => {
     const [ resultado, setResultado ] = useState([])
 
-    const { result } = useCalculator()
+    const { result, numbers, numbersTwo, operator } = useCalculator()
 
     return(
         <>
-            <h3>Soy Resultado</h3>
-            <h3>Resultado: {result}</h3>
+            <h1>Resultado: {result}</h1>
             <Link to={"/"}>Calculadora</Link>
         </>
     )

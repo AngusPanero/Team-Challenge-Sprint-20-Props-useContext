@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <CalculatorProvider>
-      <h1>Soy App dentro de Provider</h1>
         <RouterComponent />
         <CalculatorComponent />
       </CalculatorProvider>
